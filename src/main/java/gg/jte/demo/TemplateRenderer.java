@@ -6,12 +6,12 @@ import gg.jte.TemplateEngine;
 import gg.jte.output.Utf8ByteOutput;
 import gg.jte.resolve.DirectoryCodeResolver;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class TemplateRenderer {
@@ -19,7 +19,7 @@ public class TemplateRenderer {
 
     public TemplateRenderer() {
         CodeResolver codeResolver = new DirectoryCodeResolver(Path.of("src", "main", "jte"));
-        templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+        templateEngine = TemplateEngine.create(codeResolver, Paths.get("jte-classes"), ContentType.Html, getClass().getClassLoader());
         templateEngine.setBinaryStaticContent(true);
     }
 
