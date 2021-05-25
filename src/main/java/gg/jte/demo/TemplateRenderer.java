@@ -15,12 +15,20 @@ import java.nio.file.Paths;
 
 @Service
 public class TemplateRenderer {
+
+    // TODO determine if we run spring boot in development mode or not
+    private final boolean devMode = false;
+
     private final TemplateEngine templateEngine;
 
     public TemplateRenderer() {
-        CodeResolver codeResolver = new DirectoryCodeResolver(Path.of("src", "main", "jte"));
-        templateEngine = TemplateEngine.create(codeResolver, Paths.get("jte-classes"), ContentType.Html, getClass().getClassLoader());
-        templateEngine.setBinaryStaticContent(true);
+        if (devMode) {
+            CodeResolver codeResolver = new DirectoryCodeResolver(Path.of("src", "main", "jte"));
+            templateEngine = TemplateEngine.create(codeResolver, Paths.get("jte-classes"), ContentType.Html, getClass().getClassLoader());
+            templateEngine.setBinaryStaticContent(true);
+        } else {
+            templateEngine = TemplateEngine.createPrecompiled(ContentType.Html);
+        }
     }
 
     public void render(String name, Object model, HttpServletResponse response) {
