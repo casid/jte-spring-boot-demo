@@ -23,7 +23,7 @@ public class TemplateRenderer {
     private final TemplateEngine templateEngine;
 
     public TemplateRenderer() {
-        if (profile != "prod") {
+        if ("prod".equals(profile)) {
             CodeResolver codeResolver = new DirectoryCodeResolver(Path.of("src", "main", "jte"));
             templateEngine = TemplateEngine.create(codeResolver, Paths.get("jte-classes"), ContentType.Html, getClass().getClassLoader());
             templateEngine.setBinaryStaticContent(true);
