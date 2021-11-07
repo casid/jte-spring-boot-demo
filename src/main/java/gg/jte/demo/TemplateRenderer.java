@@ -5,7 +5,6 @@ import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.output.Utf8ByteOutput;
 import gg.jte.resolve.DirectoryCodeResolver;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,13 +16,11 @@ import java.nio.file.Paths;
 @Service
 public class TemplateRenderer {
 
-    @Value("${spring.profiles.active}")
-    private String profile;
-
     private final TemplateEngine templateEngine;
 
     public TemplateRenderer() {
-        if (profile != "prod") {
+        String profile = System.getenv("SPRING_ENV");
+        if ("prod".equals(profile)) {
             CodeResolver codeResolver = new DirectoryCodeResolver(Path.of("src", "main", "jte"));
             templateEngine = TemplateEngine.create(codeResolver, Paths.get("jte-classes"), ContentType.Html, getClass().getClassLoader());
             templateEngine.setBinaryStaticContent(true);
