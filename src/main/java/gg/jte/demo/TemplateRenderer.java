@@ -21,11 +21,14 @@ public class TemplateRenderer {
     public TemplateRenderer() {
         String profile = System.getenv("SPRING_ENV");
         if ("prod".equals(profile)) {
+            // Templates will be compiled by the maven build task
+            templateEngine = TemplateEngine.createPrecompiled(ContentType.Html);
+        } else {
+            // Here, a JTE file watcher will recompile the JTE templates upon file save (the web browser will auto-refresh)
+            // If using IntelliJ, use Ctrl-F9 to trigger an auto-refresh when editing non-JTE files.
             CodeResolver codeResolver = new DirectoryCodeResolver(Path.of("src", "main", "jte"));
             templateEngine = TemplateEngine.create(codeResolver, Paths.get("jte-classes"), ContentType.Html, getClass().getClassLoader());
             templateEngine.setBinaryStaticContent(true);
-        } else {
-            templateEngine = TemplateEngine.createPrecompiled(ContentType.Html);
         }
     }
 
