@@ -30,7 +30,7 @@ public class DemoController {
         visitsRepository.add();
 
         DemoModel model = new DemoModel();
-        model.name = "unknown visitor";
+        model.name = "mystérieux visiteur";
         model.visits = visitsRepository.get();
 
         templateRenderer.render("demo.jte", model, response);

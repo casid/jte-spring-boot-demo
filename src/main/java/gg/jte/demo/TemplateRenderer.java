@@ -5,11 +5,13 @@ import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.output.Utf8ByteOutput;
 import gg.jte.resolve.DirectoryCodeResolver;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -36,7 +38,8 @@ public class TemplateRenderer {
         Utf8ByteOutput output = new Utf8ByteOutput();
         templateEngine.render(name, model, output);
 
-        response.setContentType("text/html");
+        response.setContentType(MediaType.TEXT_HTML_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentLength(output.getContentLength());
 
         try {
