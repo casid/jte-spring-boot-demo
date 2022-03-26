@@ -3,6 +3,7 @@ package gg.jte.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class DemoController {
 
-    @Autowired
-    TemplateRenderer templateRenderer;
     @Autowired
     VisitsRepository visitsRepository;
 
@@ -26,13 +25,10 @@ public class DemoController {
     }
 
     @GetMapping("/")
-    public void view(HttpServletResponse response) {
+    public String view(Model model, HttpServletResponse response) {
         visitsRepository.add();
 
-        DemoModel model = new DemoModel();
-        model.name = "mystérieux visiteur";
-        model.visits = visitsRepository.get();
-
-        templateRenderer.render("demo.jte", model, response);
+        model.addAttribute("model", new DemoModel("mystérieux visiteur", visitsRepository.get()));
+        return "demo";
     }
 }
