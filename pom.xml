@@ -28,10 +28,15 @@
 			<version>${jte.version}</version>
 		</dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>io.github.atomfrede</groupId>-->
+<!--			<artifactId>jte-spring-boot-starter</artifactId>-->
+<!--			<version>1.0.0-SNAPSHOT</version>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>io.github.atomfrede</groupId>
+			<groupId>com.github.atomfrede</groupId>
 			<artifactId>jte-spring-boot-starter</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>main-5b904d2aba-1</version>
 		</dependency>
 
 		<dependency>
@@ -104,5 +109,12 @@
 
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 </project>
